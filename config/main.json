@@ -1,0 +1,131 @@
+{
+  "service": {
+    "log_level": "INFO"
+  },
+  "repository": {
+    "type": "nats",
+    "options": {
+      "servers": [
+        "nats://0.0.0.0:4222"
+      ],
+      "publishers": [
+      ],
+      "aggregator": {
+        "enabled": true,
+        "agg_time": 1
+      }
+    }
+  },
+  "entrypoints": [
+    {
+      "type": "cryptocompare",
+      "options": {
+        "threads": 1,
+        "api_key": "0c740ad4d741b54aae7fd849c3c8cbd7fb8a9907b107d30b3e3954fd7659bf99",
+        "is_publisher": 0,
+        "host": "wss://streamer.cryptocompare.com/v2?api_key=",
+        "listener": {
+          "subs": [
+            "5~CCCAGG~XRP~BTC",
+            "5~CCCAGG~ADA~BTC",
+            "5~CCCAGG~ADA~ETH",
+            "5~CCCAGG~ADA~EUR",
+            "5~CCCAGG~ALGO~BTC",
+            "5~CCCAGG~BCH~BTC",
+            "5~CCCAGG~BCH~EUR",
+            "5~CCCAGG~BCH~USD",
+            "5~CCCAGG~BTC~EUR",
+            "5~CCCAGG~BTC~USD",
+            "5~CCCAGG~BTC~CNY",
+            "5~CCCAGG~BTC~IDR",
+            "5~CCCAGG~BTC~INR",
+            "5~CCCAGG~BTC~JPY",
+            "5~CCCAGG~BTC~KRW",
+            "5~CCCAGG~DASH~BTC",
+            "5~CCCAGG~DASH~ETH",
+            "5~CCCAGG~DASH~EUR",
+            "5~CCCAGG~DASH~USD",
+            "5~CCCAGG~DOGE~BTC",
+            "5~CCCAGG~EOS~BTC",
+            "5~CCCAGG~ETH~BTC",
+            "5~CCCAGG~ETH~EUR",
+            "5~CCCAGG~LTC~BTC",
+            "5~CCCAGG~LTC~ETH",
+            "5~CCCAGG~LTC~EUR",
+            "5~CCCAGG~LTC~USD",
+            "5~CCCAGG~NEO~BTC",
+            "5~CCCAGG~NEO~ETH",
+            "5~CCCAGG~TRX~BTC",
+            "5~CCCAGG~TRX~ETH",
+            "5~CCCAGG~XLM~BTC",
+            "5~CCCAGG~XLM~ETH",
+            "5~CCCAGG~XLM~EUR",
+            "5~CCCAGG~XLM~USD",
+            "5~CCCAGG~XMR~BTC",
+            "5~CCCAGG~XMR~ETH",
+            "5~CCCAGG~XMR~EUR",
+            "5~CCCAGG~XMR~USD",
+            "5~CCCAGG~XRP~ETH",
+            "5~CCCAGG~XRP~EUR",
+            "5~CCCAGG~XRP~USD",
+            "5~CCCAGG~ZEC~BTC",
+            "5~CCCAGG~ZEC~ETH",
+            "5~CCCAGG~ZEC~EUR",
+            "5~CCCAGG~ZEC~USD"
+          ],
+          "events": {
+            "events_params": {
+              "name_path": "TYPE"
+            },
+            "events_array": {
+              "quote": {
+                "attributes": {
+                  "symbol": "symbol",
+                  "bid": "bid",
+                  "ask": "ask",
+                  "type": "type"
+                },
+                "options": {
+                  "request_object_type": "CryptocompareQuote"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "dde",
+      "options": {
+        "threads": 1,
+        "listener": {
+          "ping_timeout": 58,
+          "host": "94.130.114.222",
+          "port": 2222,
+          "auth": {
+            "login": "user1",
+            "password": "1234567"
+          },
+          "events": {
+            "events_params": {
+              "name_path": "type"
+            },
+            "events_array": {
+              "quote": {
+                "attributes": {
+                  "symbol": "symbol",
+                  "bid": "bid",
+                  "ask": "ask",
+                  "type": "type"
+                },
+                "options": {
+                  "request_object_type": "DdeQuote"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
