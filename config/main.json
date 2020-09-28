@@ -19,6 +19,7 @@
   "entrypoints": [
     {
       "type": "cryptocompare",
+      "enabled": true,
       "options": {
         "threads": 1,
         "api_key": "0c740ad4d741b54aae7fd849c3c8cbd7fb8a9907b107d30b3e3954fd7659bf99",
@@ -96,6 +97,7 @@
     },
     {
       "type": "dde",
+      "enabled": true,
       "options": {
         "threads": 1,
         "listener": {

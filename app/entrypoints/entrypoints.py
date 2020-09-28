@@ -13,7 +13,7 @@ class Entrypoints:
         threads = []
         threads_count = self.options.get('threads', None)
         log.info(f'Starting {self.type} entrypoint with {threads_count} threads...')
-        if threads_count:
+        if threads_count and self.options.get('enabled', False):
             if self.type == 'cryptocompare':
                 from .cryptocompare import cryptocompare
                 loop = asyncio.get_event_loop()
