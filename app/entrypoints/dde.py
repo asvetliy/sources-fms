@@ -3,7 +3,6 @@ import logging
 
 from app.core.shared.event_object import EventObject
 
-
 log = logging.getLogger(__name__)
 
 
@@ -28,13 +27,25 @@ async def dde(entrypoint, use_cases):
                 return True
         return False
 
+    async def send_ping():
+        while True:
+            try:
+                w.write('> Ping\r\n'.encode('utf-8'))
+                await w.drain()
+                await asyncio.sleep(entrypoint.options['listener']['ping_timeout'])
+            except Exception as e:
+                log.exception(e)
+                break
+
     if await auth():
+        loop = asyncio.get_event_loop()
+        loop.create_task(send_ping())
         log.info('DDE listener started...')
         while True:
-            data = await r.read(1024)
-            data = data.decode().split('\r\n')
-            for q in data:
-                q = q.strip().split(' ')
+            try:
+                data = await r.readline()
+                data = data.decode()
+                q = data.strip().split(' ')
                 if len(q) == 3:
                     quote = {
                         'symbol': q[0],
@@ -48,3 +59,6 @@ async def dde(entrypoint, use_cases):
                         if not request_object:
                             continue
                         response_object = await use_cases.execute(request_object)
+            except Exception as e:
+                log.exception(e)
+                break
