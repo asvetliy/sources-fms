@@ -15,6 +15,7 @@ class Config:
     PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, os.pardir))
     CONFIG_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, 'config'))
     MAIN_CONFIG = os.path.join(CONFIG_DIR, 'main.json')
+    MAIN_LOCAL_CONFIG = os.path.join(CONFIG_DIR, 'main-local.json')
     LOGGING_CONFIG = os.path.join(CONFIG_DIR, 'logging.json')
 
     def __init__(self, config_path=None):
@@ -48,8 +49,10 @@ class Config:
 
         if config_path is not None:
             return get_config(config_path, self.LOGGING_CONFIG)
-
-        config = get_config(self.MAIN_CONFIG, self.PREFIX + '.environ', self.LOGGING_CONFIG)
+        if os.path.isfile(self.MAIN_LOCAL_CONFIG):
+            config = get_config(self.MAIN_LOCAL_CONFIG, self.PREFIX + '.environ', self.LOGGING_CONFIG)
+        else:
+            config = get_config(self.MAIN_CONFIG, self.PREFIX + '.environ', self.LOGGING_CONFIG)
 
         envs = {}
         for key, value in config.items():

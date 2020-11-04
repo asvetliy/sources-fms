@@ -2,3 +2,4 @@ simple-settings
 uvloop
 asyncio-nats-client
 websockets
+aiokafka

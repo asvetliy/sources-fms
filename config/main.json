@@ -3,16 +3,30 @@
     "log_level": "INFO"
   },
   "repository": {
-    "type": "nats",
+    "type": "kafka",
     "options": {
-      "servers": [
-        "nats://0.0.0.0:4222"
-      ],
-      "publishers": [
-      ],
+      "producer": {
+        "ssl": {
+          "ca": "ca",
+          "cert": "cert",
+          "key": "key",
+          "password": "password"
+        },
+        "sasl": {
+          "username": "client",
+          "password": "password",
+          "mechanism": "PLAIN"
+        },
+        "servers": [
+          "localhost:9092"
+        ],
+        "publishers": [
+        ]
+      },
       "aggregator": {
         "enabled": true,
-        "agg_time": 1
+        "agg_time": 1,
+        "topic": "quotes"
       }
     }
   },
@@ -22,7 +36,7 @@
       "options": {
         "enabled": true,
         "threads": 1,
-        "api_key": "0c740ad4d741b54aae7fd849c3c8cbd7fb8a9907b107d30b3e3954fd7659bf99",
+        "api_key": "api_key",
         "is_publisher": 0,
         "host": "wss://streamer.cryptocompare.com/v2?api_key=",
         "listener": {
@@ -76,7 +90,7 @@
           ],
           "events": {
             "events_params": {
-              "name_path": "TYPE"
+              "name_path": "type"
             },
             "events_array": {
               "quote": {
@@ -98,11 +112,11 @@
     {
       "type": "dde",
       "options": {
-        "enabled": true,
+        "enabled": false,
         "threads": 1,
         "listener": {
           "ping_timeout": 58,
-          "host": "94.130.114.222",
+          "host": "localhost",
           "port": 2222,
           "auth": {
             "login": "user1",

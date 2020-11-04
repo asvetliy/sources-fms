@@ -129,3 +129,6 @@ dmypy.json
 
 # Project files
 logs/
+
+# Local configs
+*-local.json
