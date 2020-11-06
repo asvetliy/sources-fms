@@ -20,7 +20,7 @@ async def cryptocompare(entrypoint, use_cases):
                 log.info('Cryptocompare listener started...')
                 async for message in websocket:
                     msg = json.loads(message)
-                    if msg['TYPE'] == '5' and 'FLAGS' in msg and msg['FLAGS'] < 3:
+                    if int(msg['TYPE']) == 5 and 'FLAGS' in msg and int(msg['FLAGS']) < 3:
                         quote = {
                             'symbol': msg['FROMSYMBOL'] + msg['TOSYMBOL'],
                             'type': 'quote',
