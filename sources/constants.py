@@ -1,4 +1,4 @@
-from app.core.shared import response_object as res
+from sources.core.shared import response_object as res
 
 
 class LogTypes:

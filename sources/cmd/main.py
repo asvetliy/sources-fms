@@ -4,8 +4,8 @@ import uvloop
 import os
 
 from argparse import ArgumentParser
-from app.config import Config
-from app.core.use_cases.use_cases import UseCases
+from sources.config import Config
+from sources.core.use_cases.use_cases import UseCases
 
 
 def init_config() -> Config:

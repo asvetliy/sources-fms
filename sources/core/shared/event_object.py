@@ -1,7 +1,7 @@
 import json
 import importlib
 
-from app.core.helpers import get_from_path
+from sources.core.helpers import get_from_path
 
 
 class EventObject:

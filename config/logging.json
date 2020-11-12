@@ -10,7 +10,7 @@
     },
     "handlers": {
       "console": {
-        "class": "app.logging_handler.ConsoleStreamHandler",
+        "class": "sources.logging_handler.ConsoleStreamHandler",
         "level": "DEBUG",
         "formatter": "simple",
         "stream": "ext://sys.stdout"

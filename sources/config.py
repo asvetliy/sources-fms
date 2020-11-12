@@ -2,8 +2,8 @@ import os
 import logging.config
 
 from ast import literal_eval
-from app.dataproviders.dataproviders import Dataproviders
-from app.entrypoints.entrypoints import Entrypoints
+from sources.dataproviders.dataproviders import Dataproviders
+from sources.entrypoints.entrypoints import Entrypoints
 from simple_settings import LazySettings
 
 log = logging.getLogger(__name__)

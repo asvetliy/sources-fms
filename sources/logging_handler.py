@@ -1,7 +1,7 @@
 from json import dumps
 from time import time
 from logging import StreamHandler
-from app.constants import LogTypes
+from sources.constants import LogTypes
 
 
 class ConsoleStreamHandler(StreamHandler):

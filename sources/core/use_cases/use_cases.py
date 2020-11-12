@@ -1,7 +1,7 @@
 import importlib
 import logging
 
-from app.core.shared.response_object import ResponseFailure
+from sources.core.shared.response_object import ResponseFailure
 
 log = logging.getLogger(__name__)
 

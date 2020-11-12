@@ -1,4 +1,4 @@
-from app.core.shared import request_object as req
+from sources.core.shared import request_object as req
 
 
 class CryptocompareQuoteRequestObject(req.ValidRequestObject):

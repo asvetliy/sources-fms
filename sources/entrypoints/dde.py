@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from app.core.shared.event_object import EventObject
+from sources.core.shared.event_object import EventObject
 
 log = logging.getLogger(__name__)
 

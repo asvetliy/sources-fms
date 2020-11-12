@@ -1,5 +1,5 @@
-from app.core.shared.response_object import ResponseSuccess
-from app.core.shared.use_case import UseCase
+from sources.core.shared.response_object import ResponseSuccess
+from sources.core.shared.use_case import UseCase
 
 
 class CryptocompareQuoteUseCase(UseCase):

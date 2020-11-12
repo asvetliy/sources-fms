@@ -3,7 +3,7 @@ import logging
 import websockets
 
 from asyncio import CancelledError, sleep
-from app.core.shared.event_object import EventObject
+from sources.core.shared.event_object import EventObject
 
 log = logging.getLogger(__name__)
 
