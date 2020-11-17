@@ -16,7 +16,7 @@ class UseCases(object):
 
     def _usecase(self, request_object):
         class_name = request_object.type + 'UseCase'
-        module = importlib.import_module('app.core.use_cases.sources_use_cases')
+        module = importlib.import_module('sources.core.use_cases.sources_use_cases')
         uc = getattr(module, class_name, None)
         if uc is None:
             return None

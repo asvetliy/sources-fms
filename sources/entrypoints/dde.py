@@ -34,7 +34,7 @@ async def dde(entrypoint, use_cases):
                 await w.drain()
                 await asyncio.sleep(entrypoint.options['listener']['ping_timeout'])
             except Exception as e:
-                log.exception(e)
+                log.exception(str(e))
                 break
 
     if await auth():

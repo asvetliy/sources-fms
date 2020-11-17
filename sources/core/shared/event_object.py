@@ -33,7 +33,7 @@ class EventObject:
         if 'request_object_type' not in self.options:
             return None
         class_name = self.options['request_object_type'] + 'RequestObject'
-        module = importlib.import_module('app.core.use_cases.request_objects')
+        module = importlib.import_module('sources.core.use_cases.request_objects')
         request_object_class = getattr(module, class_name, None)
         if request_object_class is None:
             return None
