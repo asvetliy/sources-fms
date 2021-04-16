@@ -34,11 +34,6 @@ async def cryptocompare(entrypoint, use_cases):
                                 continue
                             response_object = await use_cases.execute(request_object)
                 await websocket.close()
-        except CancelledError:
-            log.info('Cryptocompare task is canceled...')
-            return
-        except KeyboardInterrupt:
-            return
         except Exception as e:
             log.exception(e, exc_info=False)
             return
