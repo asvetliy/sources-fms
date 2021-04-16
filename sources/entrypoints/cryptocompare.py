@@ -2,7 +2,7 @@ import json
 import logging
 import websockets
 
-from asyncio import CancelledError, sleep
+from asyncio import CancelledError
 from sources.core.shared.event_object import EventObject
 
 log = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ async def cryptocompare(entrypoint, use_cases):
                             'symbol': msg['FROMSYMBOL'] + msg['TOSYMBOL'],
                             'type': 'quote',
                             'ask': msg['PRICE'],
-                            'bid': msg['PRICE']
+                            'bid': msg['PRICE'],
                         }
                         event_obj = EventObject.unpack_event(entrypoint, quote)
                         if event_obj is not None:
@@ -33,11 +33,12 @@ async def cryptocompare(entrypoint, use_cases):
                             if not request_object:
                                 continue
                             response_object = await use_cases.execute(request_object)
+                await websocket.close()
         except CancelledError:
             log.info('Cryptocompare task is canceled...')
-            break
+            return
         except KeyboardInterrupt:
-            break
+            return
         except Exception as e:
             log.exception(e, exc_info=False)
-            await sleep(5)
+            return

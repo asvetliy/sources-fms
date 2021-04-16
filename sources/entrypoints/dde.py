@@ -7,42 +7,42 @@ log = logging.getLogger(__name__)
 
 
 async def dde(entrypoint, use_cases):
-    r, w = await asyncio.open_connection(
-        entrypoint.options['listener']['host'],
-        entrypoint.options['listener']['port']
-    )
+    try:
+        r, w = await asyncio.open_connection(
+            entrypoint.options['listener']['host'],
+            entrypoint.options['listener']['port']
+        )
 
-    async def auth():
-        auth_data = await r.read(1024)
-        if 'Login:' in auth_data.decode():
-            w.write((entrypoint.options['listener']['auth']['login'] + '\r\n').encode('utf-8'))
-            await w.drain()
+        async def auth():
             auth_data = await r.read(1024)
-            if 'Password:' in auth_data.decode():
-                w.write((entrypoint.options['listener']['auth']['password'] + '\r\n').encode('utf-8'))
+            if 'Login:' in auth_data.decode():
+                w.write((entrypoint.options['listener']['auth']['login'] + '\r\n').encode('utf-8'))
                 await w.drain()
-                auth_data = await r.readline()
-                while 'Access granted' not in auth_data.decode():
+                auth_data = await r.read(1024)
+                if 'Password:' in auth_data.decode():
+                    w.write((entrypoint.options['listener']['auth']['password'] + '\r\n').encode('utf-8'))
+                    await w.drain()
                     auth_data = await r.readline()
-                return True
-        return False
+                    while 'Access granted' not in auth_data.decode():
+                        auth_data = await r.readline()
+                    return True
+            return False
 
-    async def send_ping():
-        while True:
-            try:
-                w.write('> Ping\r\n'.encode('utf-8'))
-                await w.drain()
-                await asyncio.sleep(entrypoint.options['listener']['ping_timeout'])
-            except Exception as e:
-                log.exception(str(e))
-                break
+        async def send_ping():
+            while True:
+                try:
+                    w.write('> Ping\r\n'.encode('utf-8'))
+                    await w.drain()
+                    await asyncio.sleep(entrypoint.options['listener']['ping_timeout'])
+                except Exception as send_exception:
+                    log.exception(str(send_exception), exc_info=False)
+                    break
 
-    if await auth():
-        loop = asyncio.get_event_loop()
-        loop.create_task(send_ping())
-        log.info('DDE listener started...')
-        while True:
-            try:
+        if await auth():
+            loop = asyncio.get_event_loop()
+            loop.create_task(send_ping())
+            log.info('DDE listener started...')
+            while True:
                 data = await r.readline()
                 data = data.decode()
                 q = data.strip().split(' ')
@@ -59,6 +59,6 @@ async def dde(entrypoint, use_cases):
                         if not request_object:
                             continue
                         response_object = await use_cases.execute(request_object)
-            except Exception as e:
-                log.exception(e)
-                break
+    except Exception as base_exception:
+        log.exception(str(base_exception), exc_info=False)
+        return
