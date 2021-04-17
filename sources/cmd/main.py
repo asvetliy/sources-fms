@@ -54,5 +54,12 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     config = init_config()
     log.info('Starting...')
-    app = loop.run_until_complete(init_app(config))
-    loop.run_forever()
+    try:
+        app = loop.run_until_complete(init_app(config))
+        loop.run_forever()
+    except KeyboardInterrupt as e:
+        log.warning('Caught keyboard interrupt. Canceling tasks...')
+    except Exception as e:
+        log.exception(str(e), exc_info=False)
+    finally:
+        loop.close()

@@ -34,6 +34,8 @@ async def dde(entrypoint, use_cases):
                     w.write('> Ping\r\n'.encode('utf-8'))
                     await w.drain()
                     await asyncio.sleep(entrypoint.options['listener']['ping_timeout'])
+                except asyncio.CancelledError:
+                    break
                 except Exception as send_exception:
                     log.exception(str(send_exception), exc_info=False)
                     break
