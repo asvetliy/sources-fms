@@ -2,7 +2,6 @@ import json
 import logging
 import websockets
 
-from asyncio import CancelledError
 from sources.core.shared.event_object import EventObject
 
 log = logging.getLogger(__name__)
@@ -35,5 +34,5 @@ async def cryptocompare(entrypoint, use_cases):
                             response_object = await use_cases.execute(request_object)
                 await websocket.close()
         except Exception as e:
-            log.exception(e, exc_info=False)
+            log.exception(str(e), exc_info=False)
             return
